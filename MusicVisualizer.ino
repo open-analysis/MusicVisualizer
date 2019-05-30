@@ -3,7 +3,6 @@
 - get LCD Screen for combineColors so ppl know what's going on
 - get Perf board to solder components to
 */
-//Program by Michael Bartlett
 
 //Libraries
 #include <Adafruit_NeoPixel.h>  //Library to simplify interacting with the LED strand
