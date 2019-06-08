@@ -13,7 +13,8 @@
 
 //Constants (change these as necessary)
 #define LED_PIN   A5  //Pin for the pixel strand. Does not have to be analog.
-#define LED_TOTAL 300  //Change this to the number of LEDs in your strand.
+//#define LED_TOTAL 300  //Change this to the number of LEDs in your strand.
+#define LED_TOTAL 100  //Change this to the number of LEDs in your strand.
 #define LED_HALF  LED_TOTAL/2
 #define AUDIO_PIN A0  //Pin for the envelope of the sound detector
 //#define KNOB_PIN  A1  //Pin for the trimpot 10K
@@ -110,94 +111,73 @@ void loop() {  //This is where the magic happens. This loop produces each frame 
   bump = (volume - last) > avgBump;
   
   if (setting != lastSetting){
-    if (on){
-      switch(setting){
-      case 0:
-        Pulse();
-        break;
-      case 1:
-        PalettePulse();
-        break;
-      case 2:
-        PaletteDance();
-        break;
-      case 3:
-        Snake();
-        break;
-      case 4: //setColor(RED)
-        setColor(4);
-        break;
-      case 5: //setColor(GREEN)
-        setColor(5);
-        break;
-      case 6: //setColor(BLUE)
-        setColor(6);
-        break;
-      case 7: //setColor(WHITE)
-        setColor(7);
-        break;
-      case 8: //setColor(YELLOW)
-        setColor(8);
-        break;
-      case 9: //setColor(ORANGE)
-        setColor(9);
-        break;
-      case 10: //setColor(CYAN)
-        setColor(10);
-        break;
-      case 11: //setColor(PURPLE)
-        setColor(11);
-        break;
-      default:
-        // all white
-        setColor(999);
-        break;
-    }
-    }
-    else{
     switch(setting){
-      case 0:
-        PulseNoMusic();
-        break;
-      case 1:
-        PalettePulseNoMusic();
-        break;
-      case 2:
-        PaletteDanceNoMusic();
-        break;
-      case 3:
-        SnakeNoMusic();
-        break;
-      case 4: //setColor(RED)
-        setColor(4);
-        break;
-      case 5: //setColor(GREEN)
-        setColor(5);
-        break;
-      case 6: //setColor(BLUE)
-        setColor(6);
-        break;
-      case 7: //setColor(WHITE)
-        setColor(7);
-        break;
-      case 8: //setColor(YELLOW)
-        setColor(8);
-        break;
-      case 9: //setColor(ORANGE)
-        setColor(9);
-        break;
-      case 10: //setColor(CYAN)
-        setColor(10);
-        break;
-      case 11: //setColor(PURPLE)
-        setColor(11);
-        break;
-      default:
-        // all white
-        setColor(999);
-        break;
-    }  
+    case 0:
+      Pulse();
+      break;
+    case 1:
+      PalettePulse();
+      break;
+    case 2:
+      PaletteDance();
+      break;
+    case 3:
+      Snake();
+      break;
+    case 4: //setColor(RED)
+      setColor(setting);
+      break;
+    case 5: //setColor(GREEN)
+      setColor(setting);
+      break;
+    case 6: //setColor(BLUE)
+      setColor(setting);
+      break;
+    case 7: //setColor(WHITE)
+      setColor(setting);
+      break;
+    case 8: //setColor(YELLOW)
+      setColor(setting);
+      break;
+    case 9: //setColor(ORANGE)
+      setColor(setting);
+      break;
+    case 10: //setColor(CYAN)
+      setColor(setting);
+      break;
+    case 11: //setColor(PURPLE)
+      setColor(setting);
+      break;
+    case 17: // RED-ORANGE
+      setColor(setting);
+      break;
+    case 18: // DARK GREEN
+      setColor(setting);
+      break;
+    case 19: // DARK BLUE
+      setColor(setting);
+      break;
+    case 20: // LIGHT GREEN
+      setColor(setting);
+      break;
+    case 21: // YELLOW-ORANGE
+      setColor(setting);
+      break;
+    case 22: // PURPLE-PINK
+      setColor(setting);
+      break;
+    case 23: // SKY BLUE
+      setColor(setting);
+      break;
+    case 24: // PINK
+      setColor(setting);
+      break;
+    default:
+      // all white
+      setColor(999);
+      break;
     }
+    //delay(2000);
   }
   lastSetting=setting;
   
@@ -213,8 +193,7 @@ void loop() {  //This is where the magic happens. This loop produces each frame 
 
 //////////<Display Functions>
 
-//PULSE
-//Pulse from center of the strand
+//PULSE//Pulse from center of the strand
 void Pulse() {
 
   fade(0.75);   //Listed below, this function simply dims the colors a little bit each pass of loop()
@@ -292,7 +271,7 @@ void PalettePulse() {
       if (avgCol > avgCol2) strand.setPixelColor(i, strand.Color(colors[0], colors[1], colors[2]));
     }
   }
-  strand.setBrightness(255.0 * brightness); // added a brightness multiplier
+  //strand.setBrightness(255.0 * brightness); // added a brightness multiplier
   strand.show();
 }
 
@@ -335,7 +314,7 @@ void Snake() {
     else if (gradient % 4 == 0)                                       dotPos += (left) ? -1 : 1;
   }
   
-  strand.setBrightness(255.0 * brightness); // added a brightness multiplier
+  //strand.setBrightness(255.0 * brightness); // added a brightness multiplier
   strand.show(); // Display the lights
 
   //Check if dot position is out of bounds.
@@ -399,7 +378,7 @@ void PaletteDance() {
   //If there's no sound, fade.
   else  fade(0.8);
 
-  strand.setBrightness(255.0 * brightness); // added a brightness multiplier
+  //strand.setBrightness(255.0 * brightness); // added a brightness multiplier
   strand.show(); //Show lights.
 
   //Loop "dotPos" if it goes out of bounds.
@@ -411,7 +390,6 @@ void PaletteDance() {
 //SETCOLOR
 //Sets the whole string to a single color
 void setColor(unsigned int col){
-  //FIGURE OUT ACTUAL RGB VALUES LATER
   uint32_t color;
   switch(col){
     case 4: //RED
@@ -466,7 +444,7 @@ void setColor(unsigned int col){
       color = strand.Color(0,0,0);
       break;
   }
-  strand.setBrightness(255.0 * brightness); // added a brightness multiplier
+  //strand.setBrightness(255.0 * brightness); // added a brightness multiplier
   strand.fill(color, 0, LED_TOTAL);
   strand.show();
 }
@@ -550,7 +528,7 @@ void PalettePulseNoMusic() {
       if (avgCol > avgCol2) strand.setPixelColor(i, strand.Color(colors[0], colors[1], colors[2]));
     }
   }
-  strand.setBrightness(255.0 * brightness); // added a brightness multiplier
+  //strand.setBrightness(255.0 * brightness); // added a brightness multiplier
   strand.show();
 }
 
@@ -593,7 +571,7 @@ void SnakeNoMusic() {
     else if (gradient % 4 == 0)                                       dotPos += (left) ? -1 : 1;
   }
   
-  strand.setBrightness(255.0 * brightness); // added a brightness multiplier
+  //strand.setBrightness(255.0 * brightness); // added a brightness multiplier
   strand.show(); // Display the lights
 
   //Check if dot position is out of bounds.
@@ -657,7 +635,7 @@ void PaletteDanceNoMusic() {
   //If there's no sound, fade.
   else  fade(0.8);
 
-  strand.setBrightness(255.0 * brightness); // added a brightness multiplier
+  //strand.setBrightness(255.0 * brightness); // added a brightness multiplier
   strand.show(); //Show lights.
 
   //Loop "dotPos" if it goes out of bounds.
@@ -726,145 +704,195 @@ uint32_t Rainbow(unsigned int i) {
 void changeSettings(){
   int resultCode = (results.value);
   Serial.println(results.value);
-  switch(results.value){
-    case 0x2FD38C7: //On
+  uint32_t lastColor;
+  switch(results.value & 0xFFFF){
+    case 0x38C7: //On
       on = true;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FDA857: //Off
+    case 0xA857: //Off
+      Serial.println("OFF");
       on = false;
       strand.clear();
+      strand.show();
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FDB04F: //Brigthness 100%
+    case 0xF807: //Brigthness 100%
       brightness = 1.0;
+      lastColor = strand.getPixelColor(0);
+      strand.clear();
+      strand.setBrightness(255.0 * brightness);
+      strand.fill(lastColor, 0, LED_TOTAL);
+      strand.show();
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FD50AF: //Brightness 75%
+    case 0xD827: //Brightness 75%
       brightness = .75;
+      lastColor = strand.getPixelColor(0);
+      strand.clear();
+      strand.setBrightness(255.0 * brightness);
+      strand.fill(lastColor, 0, LED_TOTAL);
+      strand.show();
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FDE01F: //Brigthness 50%
+    case 0x7887: //Brigthness 50%
       brightness = .5;
+      lastColor = strand.getPixelColor(0);
+      strand.clear();
+      strand.setBrightness(255.0 * brightness);
+      strand.fill(lastColor, 0, LED_TOTAL);
+      strand.show();
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FD58A7: //Brightness 25%
+    case 0x58A7: //Brightness 25%
       brightness = .25;
+      lastColor = strand.getPixelColor(0);
+      strand.clear();
+      strand.setBrightness(255.0 * brightness);
+      strand.fill(lastColor, 0, LED_TOTAL);
+      strand.show();
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FD8877: //Pulse
+    case 0x8877: //Pulse
       setting = 0;
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FDF00F: //PalettePulse
+    case 0xF00F: //PalettePulse
       setting = 1;
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FD08F7: //Snake
+    case 0xC837: //Snake
       setting = 2;
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FDC837: //PaletteDance
+    case 0x08F7: //PaletteDance
       setting = 3;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FD807F: //All Red
+    case 0x807F: //All Red
       setting = 4;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FD40BF: //All Green
+    case 0x40BF: //All Green
       setting = 5;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FDC03F: //All Blue
+    case 0xC03F: //All Blue
       setting = 6;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0xFFFFFFFF: //All White
+    case 0x9867: //All White
       setting = 7;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FD708F: //All Yellow
+    case 0xB04F: //All Yellow
       setting = 8;
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FD10EF: //All Orange
+    case 0xE01F: //All Orange
       setting = 9;
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FDE817: //All Cyan
+    case 0x00FF: //All Cyan
       setting = 10;
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FDD827: //All Purple
+    case 0x906F: //All Purple
       setting = 11;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FD20DF: //All Red-Orange
+    case 0x20DF: //All Red-Orange
       setting = 17;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FDA05F: //All Dark Green
+    case 0xA05F: //All Dark Green
       setting = 18;
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FD7887: //All Dark Blue
+    case 0x609F: //All Dark Blue
       setting = 19;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FD906F: //All Light Green
+    case 0x10EF: //All Light Green
       setting = 20;
+      delay(1000);
       irrecv.resume();
       break;
-    case 0x2FD00FF: //All Yellow-Orange
+    case 0x50AF: //All Yellow-Orange
       setting = 21;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FDF807: //All Purple-Pink
+    case 0xE817: //All Purple-Pink
       setting = 22;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FDB847: //All Sky Blue
+    case 0x708F: //All Sky Blue
       setting = 23;
+      delay(1000); 
       irrecv.resume();
       break;
-    case 0x2FD9867: //All Pink
+    case 0xB847: //All Pink
       setting = 24;
+      delay(1000); 
       irrecv.resume();
       break;
     default:
       setting = 999;
+      delay(1000);
       irrecv.resume();
   }
 }
 
 /*
-2FD38C7 - ON-
-2FDA857 - OFF-
-2FD8877 - FLASH-
-2FDF00F - STROBE-
-2FDC837 - FADE-
-2FD08F7 - SMOOTH-
-2FD807F - RED-
-2FD40BF - GREEN-
-2FDC03F - BLUE-
-2FD58A7 - 25%-
-2FD20DF - RED-ORAGNGE-
-2FDA05F - DARKER GREEN-
-2FD7887 - DARKER BLUE-
-2FDE01F - 50%-
-2FD10EF - ORANGE-
-2FD906F - LIGHT GREEN-
-2FDD827 - PURPLE-
-2FD50AF - 75%-
-2FD00FF - YELLOW-ORANGE-
-2FDE817 - CYAN-
-2FDF807 - PURPLE-PINK-
-2FDB04F - 100%-
-2FD708F - YELLOW-
-2FDB847 - SKY BLUE-
-2FD9867 - PINK-
-FFFFFFFF - WHITE-
+0x38C7  on
+0xA857  off
+0x8877  flash
+0xF00F  strobe
+0xC837  fade
+0x08F7  smooth
+0x807F  red
+0x40BF  green
+0xC03F  blue
+0x58A7  25
+0x20DF  red-orange
+0xA05F  dark green
+0x609F  dark blue
+0x7887  50
+0xE01F  orange
+0x10EF  light green
+0x906F  purple
+0xD827  75
+0x50AF  yellow-orange
+0x00FF  cyan
+0xE817  purple-pink
+0xF807  100
+0xB04F  yellow
+0x708F  sky-blue
+0xB847  pink
+0x9867  white
  */
 
 //////////</Helper Functions>
