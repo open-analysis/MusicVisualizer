@@ -1,7 +1,6 @@
 /* TODO:
 - add NoMusic functions
 - get LCD Screen for combineColors so ppl know what's going on
-- get Perf board to solder components to
 */
 
 //Libraries
@@ -33,7 +32,6 @@ uint8_t volume = 0;    //Holds the volume level read from the sound detector.
 uint8_t last = 0;      //Holds the value of volume from the previous loop() pass.
 
 float maxVol = 15;     //Holds the largest volume recorded thus far to proportionally adjust the visual's responsiveness.
-//float knob = 1023.0;   //Holds the percentage of how twisted the trimpot is. Used for adjusting the max brightness.
 float avgVol = 0;      //Holds the "average" volume-level to proportionally adjust the visual experience.
 float avgBump = 0;     //Holds the "average" volume-change to trigger a "bump."
 float brightness = .50; //Multiplier to say how bright LED's should be
@@ -111,7 +109,8 @@ void loop() {  //This is where the magic happens. This loop produces each frame 
   bump = (volume - last) > avgBump;
   
   if (setting != lastSetting){
-    switch(setting){
+    if(on){
+      switch(setting){
     case 0:
       Pulse();
       break;
@@ -177,7 +176,7 @@ void loop() {  //This is where the magic happens. This loop produces each frame 
       setColor(999);
       break;
     }
-    //delay(2000);
+    }
   }
   lastSetting=setting;
   
@@ -195,6 +194,7 @@ void loop() {  //This is where the magic happens. This loop produces each frame 
 
 //PULSE//Pulse from center of the strand
 void Pulse() {
+  strand.clear();
 
   fade(0.75);   //Listed below, this function simply dims the colors a little bit each pass of loop()
 
@@ -244,6 +244,7 @@ void Pulse() {
 //PALETTEPULSE
 //Same as Pulse(), but colored the entire pallet instead of one solid color
 void PalettePulse() {
+  strand.clear();
   fade(0.75);
   if (bump) gradient += RBTHRESHOLD / 24;
   if (volume > 0) {
@@ -279,6 +280,7 @@ void PalettePulse() {
 //SNAKE
 //Dot sweeping back and forth to the beat
 void Snake() {
+  strand.clear();
   if (bump) {
 
     //Change color a little on a bump
@@ -327,6 +329,7 @@ void Snake() {
 //Projects a whole palette which oscillates to the beat, similar to the snake but a whole gradient instead of a dot
 void PaletteDance() {
   //This is the most calculation-intensive visual, which is why it doesn't need delayed.
+  strand.clear();
 
   if (bump) left = !left; //Change direction of iteration on bump
 
@@ -390,6 +393,7 @@ void PaletteDance() {
 //SETCOLOR
 //Sets the whole string to a single color
 void setColor(unsigned int col){
+  strand.clear();
   uint32_t color;
   switch(col){
     case 4: //RED
@@ -449,7 +453,7 @@ void setColor(unsigned int col){
   strand.show();
 }
 
-
+/*
 //PULSE NO MUSIC
 //Pulse from center of the strand
 void PulseNoMusic() {
@@ -642,7 +646,7 @@ void PaletteDanceNoMusic() {
   if (dotPos < 0) dotPos = strand.numPixels() - strand.numPixels() / 6;
   else if (dotPos >= strand.numPixels() - strand.numPixels() / 6)  dotPos = 0;
 }
-
+*/
 //////////</Display Functions>
 
 //////////<Helper Functions>
@@ -708,6 +712,7 @@ void changeSettings(){
   switch(results.value & 0xFFFF){
     case 0x38C7: //On
       on = true;
+      setColor(7);
       delay(1000); 
       irrecv.resume();
       break;
