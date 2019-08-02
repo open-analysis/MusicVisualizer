@@ -68,7 +68,7 @@ void setup() {    //Like it's named, this gets ran before any other function.
   Serial.begin(9600); //Sets data rate for serial data transmission.
 
   irrecv.enableIRIn(); // Start the receiverfor irrecv
-  
+
   strand.begin(); //Initialize the LED strand object.
   strand.show();  //Show a blank strand, just to get the LED's ready for use.
   strand.clear();
@@ -711,8 +711,9 @@ void changeSettings(){
   uint32_t lastColor;
   switch(results.value & 0xFFFF){
     case 0x38C7: //On
+      Serial.println("ON");
       on = true;
-      setColor(7);
+      setColor(17);
       delay(1000); 
       irrecv.resume();
       break;
